@@ -1,0 +1,528 @@
+version 1.12.0 2017-06-20
+
+Changelog
+- CMake support
+- Fix iOS build
+- Fix AVPacket memory leak
+- Geometry & GeometryRenderer class is public
+- PAL8, XYZ color format support
+- Fix OpenGL background color
+- Fix external clock error after pause
+- VA-API encoder support (ffmpeg>=3)
+- Other improvements, fixes, and untested features
+
+version 1.11.0 2016-06-19
+
+Changelog
+- Dynamic load QtAVWidgets in VideoOutput. `QtAV::Widgets::registerRenderers()` and `QT += avwidgets` is not requred now.
+- D3D11 decoder support. Not stable on Windows phone.
+- DXVA refactor and bug fix.
+- VA-API: fix memory leak when seeking
+- OpenGL:
+ * Fix PBO binding
+ * Custom shader support (WIP)
+ * Edit and apply custom shader when playing. Based on Qt property system.
+ * Optimize uniform update
+ * GLSL filter support
+ * Add `OpenGLVideo.beforeRendering/afterRendering`
+- CUDA:
+ * Direct copy is default for windows. Now Rendering CUDA decoded frames is faster than any other players
+ * 0-copy is default for linux.
+ * Use new API (4.0)
+- AVPlayer:
+ * Add `AVPlayer.stoppedAt` signal
+ * add `setTimeRange()`
+ * setStart/StopPosition can be called at any time with any value
+ * Ensure all threads are running when `started` is emitted
+ * Support preload using `load()`. Now no reload in `play()`
+- Fix build with QT_NAMESPACE
+- Fix swscale color range
+- Fix linux install destinations
+- Add AVTranscoder.async, encoders are in individual threads
+- Add FrameReader class
+- Use FFmpeg 3.0 API
+- QML:
+ * Support filters, including sw filters from libavfilter, and GLSL filter
+ * Add `MediaPlayer/Video.audioBackends` property
+ * Support autoLoad
+ * Add `VideoOutput.mapTo/FromXXX` between source frame and item
+ * Video EQ in VideoOutput/Video
+ * Add `MediaPlayer.startPosition/stopPotion`
+- QMLPlayer: Open video and subtitle at the same time. History view. Zoom. Video EQ
+
+
+version 1.10.0    2016-03-01
+
+Changelog
+- Improve seek speed, fix drop too much frames after seek
+- VideoFrameExtractor: seek faster if called many times. Speed up
+progress bar preview
+- Support media files from android assets. Use protocol 'assets:'
+- Apply video decoder options when playing
+- Better iOS support
+- VideoToolbox:
+ * Check profile to avoid crash
+ * Support RGB output
+ * Use `rgb422_apple` texture
+ * Support iOS 0-copy rendering using OpenGLES
+ * More interop types for OSX and iOS
+- OpenGL
+ * Use 16bit depth textures for >8bit videos (e.g. 10bit) if possible
+ * Correct input/output color range. This fixes QtAV video different
+from other players
+ * Fix high opengl and core profile rendering
+ * Better EGL detection
+- VO:
+ * Simplify signal emitting
+ * Support background color, simplify background painting
+ * VideoOutput delete crash, resize issues
+ * Improve performance of QPainter based renderers
+- AudioOutput:
+ * remove setBufferSize, add a better API setBufferSamples
+ * Add flush(), clear(). Not implemented for backends.
+ * Fix OpenAL playback for some audio formats
+ * Dynamic load OpenAL by default except iOS
+ * Add AudioToolbox support for OSX/iOS and becomes the default backend
+ * PulseAudio: workaround noise for multiple instance
+- Subtitle:
+ * Support ass font files in android assets
+ * Fix srt decoding
+- QML:
+ * Add QtMultimedia compatible APIs VideoOutput.contentRect/sourceRect
+- Simplify SurfaceType
+- Fix strange behaviors near eof: seek, stepForward, exit etc.
+- Fix playback block if audio duration is shorter than video
+- VideoFrame constructed from QImage takes image's ownership
+- Add VideoFrame.colorRange, AudioFrame.duration
+- encoder: support start time
+- Add AVPlayer.bufferSpeed, seekFinished(qint64)
+- Fix abort when loading
+- Examples:
+ * Fix videos in videowall not synchronized
+ * QMLPlayer has better touch screen experience
+ * QMLPlayer supports win10 store (But Qt is not well supported)
+ * Drag & Drop support on OSX
+ * URL open dialog for QMLPlayer
+
+
+version 1.9.0    2015-12-19
+
+Changelog:
+- No audio thread if audio stream < 0. null AudioOutput now still create
+audio thread.
+- VideoOutput: fix lock error
+- Filter: add X11 text rendering for X11Renderer/XVRenderer.
+- LibAVFilter supports HW frames(not recommended)
+- VideoFrame copy and init issue, bpp compute error
+- Avoid using some stl APIs that breaks ABI
+- Add x11 renderer
+- XV: support NV12 and packed yuv formats
+- Fix factory initialization for static build(iOS for example)
+- Fix ffmpeg log level
+- Remove AVPicture which is deprecated
+- SWS 16 alignment, output to user defined buffer
+- Always define the registered id so we can use everywhere
+- Better iOS support: build, run, deploy(prl)
+- use libuchardet now, use system one if possible
+- Fix android build on windows
+- XAudio2: fix crash. `double` sample format is not supported
+- Fix clock value if speed changed
+- VideoRenderer.updateUi
+- VideoCapture: fix HW frame save
+- New logo ![](http://qtav.org/blog/images/QtAV1.9.0-logo.png "Logo")
+- Android: support protocol 'content'. Now can play from Gallery.
+- MediaIO is not writable by default
+- WinRT (Windows Store) support:
+ * Link to XAudio2
+ * File open and protocol
+- VA-API:
+ * Add hevc, vp9. Not tested
+ * Support more profiles
+ * Improve nvidia support
+ * Interop with egl support(dma, tfp). libva 0.38 and Qt>=5.5 are
+required.
+ * Check resolution support before open
+ * Add thread count option (new ffmpeg >2.8 does not support)
+ * Prefer /dev/dri/renderD128 for drm
+ * Correctly release X11/drm resource
+ * Interop with egl support(dma, tfp). libva 0.38 and Qt>=5.5 are required.
+- OpenGL:
+ * OpenGL ES3 optimization
+ * use new OpenGL and GLSL APIs if possible
+- CI:
+ * Add windows. Build with latest Qt release. Using msbuild, nmake and
+mingw32-make
+- API:
+ * AVPlayer.stepForward(), stepBackword(). playNextFrame() is deprecated
+ * AVPlayer.state
+ * AVPlayer.videoDecoderPriority with name list
+ * VideoRenderer.frameSize (C++), VideoOutput.frameSize
+ * XXXDecoder/Encoder::supportedCodecs, AV(De)Muxer.supportedFormats/
+Extensions
+ * QML: more metaData keys: startTime, sampleFormat, channelLayout,
+pixelFormat, videoFrames
+- QMLPlayer/Player:
+ * fix OpenGLWidgetRenderer crash
+ * Handle Home/Back button for mobile
+ * Preview item is movable
+ * ppa: rename /usr/bin/player to /usr/bin/Player
+
+
+version 1.8.0 2015-09-01
+
+Changelog:
+- XAudio2 support
+- VideoToolbox hardware decoder(OSX) support. It can decode h264, h263, mpeg1, mpeg2, mpeg4. Better than VDA
+- CUDA 0-copy support
+- Dynamic video decoder switch when playing (try it in QMLPlayer)
+- Embedded ass subtitles support
+- ass subtitle font setup
+- No OpenGL build fix for linux
+- Fix qpainter rendering if vbo is used
+- Fix OpenGL rendering for some rgb formats
+- DXVA 0-copy improvement, intel clearvideo workaround etc.
+- AO: add null backend
+- HW: fix profile check
+- Ref counted frames from ff decoders. This fix opengl crash when uploading textures
+- Fix audio resampler parameters not set correctly
+- VS2015 support
+
+
+version 1.7.0 2015-07-09
+
+Changelog:
+- DXVA GPU zero-copy support
+- DXVA copy back improvement
+- VAAPI zero-copy improvement
+- Fix opengl wrong display if switch decoder between VDA and FFmpeg
+- Video encoding support. Try examples/simpletranscode. Audio is not supported now
+- External audio track support
+- Pulseaudio improvement, fix crashes and hang
+- OpenGL: disable VBO for ANGLE to workaround qpainter filters have no effect. Less GL calls. Fix OpenGLWindowRenderer can not update correctly
+- Fix capture video when a zero-copy HW decoder is used.
+- Fix wrong audio data is played at the beginning of playback
+- Enable XV shm
+- Improve a/v sync
+- Build android on windows
+- Fix msvc debug build
+- Use OpenSL ES as for android. It works correctly now. No OpenAL required any more. Add volume control for OpenSL ES.
+- Fix crashes
+- Add ubuntu PPA
+- CI: appveyor for windows
+- AVInput=>MediaIO. You can use it to support custom output when encoding video
+- Add seekFinished, durationChanged, QML MediaPlayer.videoCapture, Subtitle delay etc
+- QMLPlayer: swipe to seek
+
+
+version 1.6.0    2015-04-23
+
+Changlog:
+- VDA: use NV12 as default format. Support 0 copy. Better performance than any other playrs
+- CUDA: fix wrong bitstream filters
+- OpenGL:
+  * PBO support (enable by enviroment var QTAV_PBO=1)
+  * rectangle texture support
+  * packed yuv formats support
+- Support buffer progress, buffer value control
+- Support frame rate setup (AVPlayer::setFrameRate())
+- Support RAW streams, such as h264, yuv
+- Audio filter support
+- Better libavfilter support. Now support libav avfilter, support audio filters from libavfilter
+- Add pulseaudio support
+- Detect volume change by per-app volume control
+- Simplify audio output API
+- Volume and mute control by audio backend API
+- Use float audio sample if possible
+- Fix iOS static link error
+- Fix error handling, EOF detect, Qt4.7 build etc.
+- Deploy: add qml, fix lib name, deploy sdk from installer, mingw deployment on linux.
+- player/QMLPlayer:
+  * decoder detail
+  * more options: preview config, buffer, fps, timeout
+  * unregister context menu(win32) if uninstalled, ifw2.0
+  * QMLPlayer file associate for android
+
+
+version 1.5.0    2015-02-13
+
+Changelog:
+- Add QtAVWidgets module contains widget based renderers, video preview widget
+- QtAV module only depends on QtCore and QtGui
+- Improve audio output API
+- Simplify deployment on OSX. Deploy sdk from release packages without build.
+- Improve seekable detection
+- Fix noise audio if volume increased
+- Fix noise and wrong playback speed for wmv videos
+- Preview is more accurate
+- Do not copy AVPacket but use reference count.
+- Faster audio track switch
+- Reopen audio output only if audio format changed
+- VideoFrame: new API for converting to another format or QImage
+- OpenGL VAO, VBO support.
+- QML
+  * Fix some crashes in QQuickItemRenderer
+  * Add FBO item renderer and use the same code path as other opengl renderers
+  * timeout property
+- player and QMLPlayer example
+  * player: real time preview on progress bar
+  * Fast seek and display if seek shortcut is pressed and hold
+
+
+version 1.4.2    2014-12-27
+
+Changelog:
+- Async load
+- Faster seek and preview. Thanks wm4(mpv developer)
+- Better a/v sync solution. Now can play high fps video better than ANY other players.
+- DXVA: enable HEVC decoder if libavcodec runtime supports. LAVFilters ffmpeg supports it.
+- Cedarv improvements, nv12 output support, neon code from libvdpau-sunxi
+- Multiple OpenAL instances support
+- AVInput class to extend media sources. Support play from qrc resouces.
+- Display the first frame after seek
+- Better clock error correction
+- Fix play frame by frame issues
+- Fix QML video shake
+- More details for error signals
+- Apply user options in the next playback
+- Dynamic load libass (submodule 'capi' is required, https://github.com/wang-bin/capi)
+- VA-API: fix blurred bottom line issue. works on libav >= 9 now.
+- Progress is start at 0 by default even if 1st pts is not 0.
+- Fix capture issues: capture current displayed frame, easier api
+- RGB48 support. OpenGL only supports RGB48LE.
+- Link to static ffmpeg support
+- Fix open error if input url/path contains special charactors
+
+
+version 1.4.1    2014-11-06
+
+Changelog:
+- More QtMultimedia compatible QML playback API
+- Debian package support. Now you can build on ubuntu>=14.04 using debuild
+- Subtitle: libass renderering support. Dynamically change FFmpeg parser and libass
+- Log level control support without changing any Qt logging functions (qDebug, qWarning etc.)
+- Video orientation support in renderers
+- Bug fix: video frame with alpha value. video stream start time >0. OpenAL can not close correctly...
+- QML only: video preview.
+- players: config UI in QMLPlayer. Video preview on progress bar.
+
+
+version 1.4.0    2014-09-10
+
+Changelog:
+- Improve OpenGL: more pixel formats, supports QML(not stable),
+dynamic gl support etc.
+- VAAPI: GLX direct rendering support. check 4k.
+- DXVA: more decoding surfaces to improve performance
+- VDA (OSX hardware decoding) support
+- Android support. Easy to deploy
+- Subtitle support, including QML
+- Improve OpenAL. Works fine on most platforms including android
+- FFmpeg libavfilter support
+- Audio output api change
+- deploy script for ifw, OSX
+- Bug fix
+- WIP: dsound, opensl, audio engine, audio filters etc.
+
+
+version 1.3.3    2014-04-20
+
+- CUDA support for windows and linux. (The first player/library support CUDA decoding on linux?)
+- Renderering 16-bit YUV (for example Hi10P) for both OpenGL and OpenGL ES2.
+  maybe it's the first player/library supports rendering 10-bit using OpenGL ES2. VLC, XBMC and mplayer can't
+  Supported format: 9, 10, 12, 14, 16 bit, planar, little/big endian.
+- Support Sailfish OS. Works perfectly.
+- Fix mosaics for some videos since QtAV1.3.1
+- Better seeking
+- New VideoOutput class with QObject features support
+- Improve cedarv hardware decoding.
+- Audio channel api for QML
+- FFmpeg build script supports maemo5, meego, sailfish, android, mingw gcc, msvc
+- Fix build error for Qt 5.0
+- player:
+  * fix wrong video display size when fullscreen mode changed or toolbar hidden
+
+
+version 1.3.2    2014-03-16
+
+- OpenGL improvement and better performance(works on iOS and Android):
+  * enable GLSL if supported
+  * use GLSL to render YUV frames
+  * GLSL based video equalizer
+- XV bug fix and improvement. Supports NV12. Supports video equalizer.
+- Play from QIODevice support
+- Capture YUV frames support.
+- Fix wrong duration in OSD
+- CUDA decoder working in progress
+- player:
+  * no gui blocking while opening a stream
+  * add config dialog
+- Regressions:
+  * OpenGL can not display H10p
+
+
+
+version 1.3.1    2014-01-27
+
+- Initial OpenAL support.
+- Fix hardware decoding crashes: seeking, packet loss(e.g. bad network)
+- Allwinner's CedarX hardware decoding support. Thanks Miroslav Bendik.
+- FFmpeg log and error handling. New class: AVError
+- AVDictionary support for decoder and demuxer. API: AVPlayer::setOptionsForXXX()
+- Fix crash on app exit
+- Fix Hi10bits crash
+- Build:
+  * fix XXX_EXPORT macro confliction.
+  * configurable qmake project etc.
+- QMLPlayer: better UI
+- player:
+  * wheel to zoom in/out.
+  * apply decoder without restart.
+  * exit on main window close.
+  * move EventHandler to player.
+- Installer: ubuntu support.
+- Screen saver for OSX, X11. Improve windows
+
+
+
+version 1.3.0    2013-12-19
+
+- Selectable audio track
+- Multiple rendering target for 1 video support
+- Hardware decoding support(unstable): DXVA2 for windows, VA-API for x11(bad performance now)
+- Region of Interest(ROI) support, i.e. crop.
+- Filter support(Experimental)
+- Video eq: brightness, contrast, saturation
+- Repeat support
+- Mang api changes
+- QML: compatible with many QtMultiMedia APIs
+- build/install: check arch, fix wrong rpath and launch error on Mac, add installer
+- player: playlist, history, better online tv, etc.
+
+
+version 1.2.4    2013-09-08
+
+- QML support(thanks theoribeiro <theo@fictix.com.br>). Can replace some of qtmultimedia qml apps, e.g. qmlvideofx
+- Fix build for FFmpeg >= 0.9, libav >= 0.8
+- Channel can be choosed by user: original, stereo, left, right, centre(mono)
+- OSD for GL ES2 renderer
+- player: statistics viewer, disable screensaver on widows when playing, more online tv channels
+
+
+version 1.2.3    2013-08-01
+
+- FFmpeg/libav avresample support
+- OpenGL ES2 support. Can build against Qt5 GLES2 version now
+- XV support for Qt5
+- more audio format support, e.g. sample format, channels.
+- Fix H.264 decoding error for the beginning frames.
+- Fix audio decoding error if packet should be decoded multiple times. WMA audio.
+- Save video captures to system Picture directory
+
+version 1.2.2    2013-07-03
+
+- Audio resampler using swresample
+- Play speed control
+- Audio format
+- Play good with audio that noise before(mp3, ...)
+- init and deinit FFmpeg only when needed
+- Component id accessed by symbol
+- mms support
+
+
+version 1.2.1    2013-06-19
+
+- Configurable video quality
+- Correct aspect ratio. Any value is supported
+- Fix some media playing problem
+- Fix crash if no audio
+- Fix d2d crash by setting multi-thread type
+- Fix WidgetRenderer can not update problem
+- Fix mem leak if renderer changed
+- player: volume control, display correct online tv name, correct display time
+
+
+version 1.2.0    2013-05-27
+
+- Better gui for the player example
+- Dynamically change renderer engine
+- Filter framework works. Filters on data and renderer support
+- XV rendering support
+- Fix some qmake project bugs
+- Other features, bug fix, code refine
+
+version 1.1.11   2013-03-15
+
+- OpenGL support. Only rendering now.
+- OSD support.
+- New shortcuts: Ctrl+O=>open, O=>switch OSD, Q/ESC=>quit
+- Command line option: -vo gl/d2d/gdi/qt, -h|--help
+- Fix wrong aspect ratio when resizing
+- Better qmake project
+- Building debian package support: make deb
+- Bug fix
+
+version 1.1.10   2013-03-04
+
+- Direct2D support. Auto check before compile
+- GDI+ renderer improved
+- Custom renderer template
+- Aspect ratio switch support
+- Config test support for both Qt4 and Qt5
+- Better build system
+- Auto update rc file
+- Some documents
+
+
+version 1.1.9    2013-02-22
+
+- Add network interrupt callback. Thanks Vito vcovito
+- QtAV and FFmpeg runtime version check
+- Add factory model to manager the components. Currently used in ImageConverter
+- MSVC support
+- Seek bug fix: some times blocked
+- qmake: no additional arguments required(if source dir is writable)
+- Add 2 graphics item renderer examples
+- GDI+ renderer support
+- Start to use script to create new classes
+
+
+version 1.1.8    2013-02-06
+
+- LGPL version 2.1
+- better Qt5 support
+- better synchronisation and seeking
+- crash fixed when getting stream info
+- crash fixed when replaying a music
+- drag & drop, simple internal gui and internal event filter
+- videowall works better
+
+
+version 1.1.7    2013-01-30
+
+- scale image without qt support!
+- buggy ipp support.
+- thread safe capture
+- Fix first frame not correctly decoded!
+- new API
+- tests and examples: clockcontrol, videowall
+
+
+version 1.1.6    2013-01-23
+
+- fix video blocking and crash when seeking
+- add tests: network, shared renderer
+- update frames when seeking in a paused state
+- avoid seeking too frequently
+- capture sync/async
+- playing music support
+- Auto select a suitable clock
+
+
+version 1.1.5    2013-01-18
+
+- playing single stream support. i.e. playing video without audio or playing music
+- plannar audio support
+- output can be shared with multiple player
+- g++ compile error fix
+- external clock
+- optimizations and bug fix

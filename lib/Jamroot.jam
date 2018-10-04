@@ -1,0 +1,286 @@
+# This Jamfile requires boost-build v2 to build.
+# The version shipped with boost 1.34.0
+
+import virtual-target ;
+import modules ;
+import feature : feature ;
+import os ;
+
+BOOST_ROOT = [ modules.peek : BOOST_ROOT ] ;
+CXXFLAGS = [ modules.peek : CXXFLAGS ] ;
+LDFLAGS = [ modules.peek : LDFLAGS ] ;
+
+ECHO "BOOST_ROOT =" $(BOOST_ROOT) ;
+ECHO "CXXFLAGS =" $(CXXFLAGS) ;
+ECHO "LDFLAGS =" $(LDFLAGS) ;
+ECHO "OS =" [ os.name ] ;
+
+if $(BOOST_ROOT)
+{
+	use-project /boost : $(BOOST_ROOT) ;
+}
+
+
+local boost-library-search-path =
+  <search>/opt/local/boost/stage/lib
+  <search>/opt/local/lib
+  <search>/usr/lib
+  <search>/usr/local/lib
+#  <search>/sw/lib
+#  <search>/usr/g++/lib
+  ;
+
+	SOURCES = 
+	../Common/common
+#	../Common/utils
+	../Common/MD5
+	lib
+	urlencode
+	streamerok
+	;
+
+#if <target-os>windows
+#{
+#	SOURCES += dllmain;
+#}
+
+
+local usage-requirements = 
+	<include>./lib
+	<include>../Import/libtorrent/include
+	<include>$(BOOST_ROOT)
+	<library-path>$(BOOST_ROOT)/stage/lib
+	
+	<variant>release:<library-path>../libtorrent/bin/msvc-10.0/release/link-static/threading-multi
+	<variant>debug:<library-path>../libtorrent/bin/msvc-10.0/debug/link-static/threading-multi
+	<library>libtorrent
+	<library>boost_filesystem
+	<library>boost_thread
+	<variant>release:<define>NDEBUG
+	<variant>debug:<define>_DEBUG
+	<define>LIB_EXPORTS
+	<define>UNICODE
+	<conditional>@linking
+# these compiler settings just makes the compiler standard conforming
+	<toolset>msvc:<cflags>/Zc:wchar_t
+	<toolset>msvc:<cflags>/Zc:forScope
+# disable bogus deprecation warnings on msvc8
+	<toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
+	<toolset>msvc:<define>_CRT_SECURE_NO_DEPRECATE
+# msvc optimizations
+	<toolset>msvc,<variant>release:<linkflags>/OPT:ICF=5
+	<toolset>msvc,<variant>release:<linkflags>/OPT:REF
+# disable warning C4503: decorated name length exceeded, name was truncated
+	<toolset>msvc:<cxxflags>/wd4503
+# disable warning C4275: non-dll interface class 'x' used as base for dll-interface struct 'y'
+	<toolset>msvc:<cxxflags>/wd4275
+# disable warning C4251: 'x' needs to have dll-interface to be used by clients of class 'y'
+	<toolset>msvc:<cxxflags>/wd4251
+# disable some warnings for gcc
+	<toolset>gcc:<cflags>-fno-strict-aliasing
+	<toolset>gcc:<cflags>-Wno-missing-braces
+# assert on integer overflow
+	<toolset>gcc,<variant>debug:<cflags>-ftrapv
+	<toolset>darwin,<variant>debug:<cflags>-ftrapv
+	<toolset>clang:<cflags>-Wno-invalid-offsetof
+	<toolset>clang-darwin:<cflags>-Wno-invalid-offsetof
+	<boost>system:<cxxflags>$(CXXFLAGS)
+	<boost>system:<linkflags>$(LDFLAGS)
+# this works around a bug in asio in boost-1.39
+	<define>BOOST_ASIO_HASH_MAP_BUCKETS=1021
+# make sure asio symbols are properly exported
+# and imported
+#	<link>shared:<define>BOOST_ASIO_DYN_LINK
+	<define>BOOST_ASIO_SEPARATE_COMPILATION
+	<tag>@tag
+	;
+
+
+# rule for adding the right source files
+# depending on target-os and features
+rule building ( properties * )
+{
+	local result ;
+
+	if ( <toolset>darwin in $(properties)
+		|| <toolset>gcc in $(properties)
+		|| <toolset>clang in $(propertoes)
+		|| <toolset>clang-darwin in $(propertoes) )
+		&& <link>shared in $(properties)
+		# on GCC, enabling debugging in libstdc++
+		# breaks the ABI and its ability to appear
+		# in shared object interfaces, so when it's
+		# enabled, just export everything (since we're)
+		# probably not a production build anyway
+		&& ! <debug-iterators>on in $(properties)
+	{
+		# hide non-external symbols
+		# use ms-compat because boost.asio (as of 1.47.0
+		# appears to have some types not fully exported)
+#		ECHO "OS =" [ os.name ] ;
+		result += <cflags>-fvisibility=hidden ;
+		result += <cxxflags>-fvisibility-inlines-hidden ;
+		result += <linkflags>-Wl ; #,-Bsymbolic ;
+
+	}
+
+	return $(result) ;
+}
+
+# rule for linking the correct libraries depending
+# on features and target-os
+rule linking ( properties * )
+{
+	local result ;
+
+	# socket functions on windows require winsock libraries
+	if <target-os>windows in $(properties)
+		|| <target-os>cygwin in $(properties)
+	{
+		result += <library>ws2_32
+			<library>wsock32
+			<library>iphlpapi
+			<library>Shell32
+			<library>User32
+			<define>WIN32_LEAN_AND_MEAN
+			<define>__USE_W32_SOCKETS
+			<define>WIN32
+			<define>_WIN32
+#			<define>_ITERATOR_DEBUG_LEVEL=0
+		;
+	}
+
+	if <boost>source in $(properties)
+	{
+		if <boost-link>static in $(properties)
+		{
+			if <link>shared in $(properties)
+			{
+				# if libtorrent is being built as a shared library
+				# but we're linking against boost statically, we still
+				# need to make boost think it's being built as a shared
+				# library, so that it properly exports its symbols
+				result += <define>BOOST_ALL_DYN_LINK ;
+				result += <library>/boost/system//boost_system/<link>static/<define>BOOST_ALL_DYN_LINK ;
+#				result += <library>$(BOOST_ROOT)/stage/lib/boost_system<link>static/<define>BOOST_ALL_DYN_LINK ;
+			}
+			else
+			{
+				result += <library>/boost/system//boost_system/<link>static ;
+			}
+
+			if <toolset>gcc in $(properties) && <link>shared in $(properties)
+			{
+				result += <fpic>on ;
+			}
+
+		}
+		else
+		{
+			result += <library>/boost/system//boost_system/<link>shared ;
+
+			# when building a shared library with openssl, for some reason we really need
+			# boost date time (at least on windows). Hopefully a future version of asio
+			# will allow disabling this dependency
+			if <encryption>openssl in $(properties)
+			{
+				result += <library>/boost/date_time//boost_date_time/<link>shared ;
+			}
+		}
+		result += <include>$(BOOST_ROOT) <define>BOOST_ALL_NO_LIB ;
+
+	}
+	else
+	{
+		result += <library>boost_system ;
+
+		if <boost-link>shared in $(properties) && <encryption>openssl in $(properties)
+		{
+			result += <library>boost_date_time ;
+		}
+
+		# on mac the boost headers are installed in
+		# a directory that isn't automatically accessable
+		# on open indiana, boost is install at /usr/g++/include
+		result += <include>/opt/local/include/boost-1_35
+			<include>/opt/local/include
+			<include>/usr/g++/include
+			;
+	}
+
+	return $(result) ;
+}
+
+rule tag ( name : type  ? : property-set )
+{
+	name = [ virtual-target.add-prefix-and-suffix $(name) : $(type) : $(property-set) ] ;
+
+	if $(type) = SHARED_LIB &&
+		( ! ( [ $(property-set).get <target-os> ] in windows cygwin ) )
+	{
+		name = $(name).$(VERSION) ;
+	}
+
+	return $(name) ;
+}
+
+feature boost : system source : link-incompatible propagated ;
+feature boost-link : static shared : composite ;
+
+lib iphlpapi : : <name>iphlpapi <link>shared ;
+lib ws2_32 : : <name>ws2_32 <link>shared ;
+lib wsock32 : : <name>wsock32 <link>shared ;
+lib Shell32 : : <name>Shell32 <link>static ;
+lib User32 : : <name>User32 <link>static ;
+
+lib boost_system : : <target-os>darwin <name>boost_system $(boost-library-search-path) ;
+
+lib boost_system : : <target-os>windows <variant>release <name>libboost_filesystem-vc100-mt-1_55 ;
+lib boost_system : : <target-os>windows <variant>debug   <name>libboost_filesystem-vc100-mt-gd-1_55 ;
+
+lib boost_filesystem : : <target-os>darwin <name>boost_filesystem $(boost-library-search-path) ;
+lib boost_filesystem : : <target-os>windows <variant>release <name>libboost_filesystem-vc100-mt-1_55 ;
+lib boost_filesystem : : <target-os>windows <variant>debug   <name>libboost_filesystem-vc100-mt-gd-1_55 ;
+
+lib boost_thread : : <target-os>darwin <name>boost_thread $(boost-library-search-path) ;
+lib boost_thread : : <target-os>windows <variant>release <name>libboost_thread-vc100-mt-1_55 ;
+lib boost_thread : : <target-os>windows <variant>debug   <name>libboost_thread-vc100-mt-gd-1_55 ;
+
+lib libtorrent : : <target-os>darwin <variant>debug <name>torrent <search>../libtorrent/bin/darwin-4.2.1/debug/link-static/threading-multi ;
+lib libtorrent : : <target-os>windows <variant>release <name>libtorrent <search>../libtorrent/bin/msvc-10.0/release/link-static/threading-multi ;
+lib libtorrent : : <target-os>windows <variant>debug   <name>libtorrent <search>../libtorrent/bin/msvc-10.0/debug/link-static/threading-multi ;
+
+
+lib streamerok 
+
+	: # sources
+	$(SOURCES).cpp
+
+	: # requirements
+	<threading>multi
+#	<link>shared:<define>TORRENT_BUILDING_SHARED
+
+	<conditional>@building
+	<boost>system:<cxxflags>$(CXXFLAGS)
+
+	# on windows, when linking statically against asio
+	# but producing a DLL, everything inside the DLL needs
+	# to declare the symbol as being exported
+	<link>shared:<define>BOOST_ASIO_SOURCE
+	<link>shared:<define>BOOST_SYSTEM_SOURCE
+
+	$(usage-requirements)
+
+	: # default build
+#	<target-os>windows <link>shared
+#	<target-os>darwin <link>static
+
+	<link>static
+#	<link>shared
+	<boost-link>static
+	<threading>multi
+
+	: # usage requirements
+	$(usage-requirements)
+	<link>shared:<define>TORRENT_LINKING_SHARED
+	;

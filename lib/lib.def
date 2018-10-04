@@ -1,0 +1,13 @@
+LIBRARY     LIB.DLL
+
+EXPORTS
+    setUpdateUrl                   @363 ; setUpdateUrl
+    torrentAddImport               @364 ; torrentAddImport
+    torrentAddStart                @365 ; torrentAddStart
+    torrentDeInit                  @366 ; torrentDeInit
+    torrentGetFileUrl              @367 ; torrentGetFileUrl
+    torrentGetInfo                 @368 ; torrentGetInfo
+    torrentGetNetUsage             @369 ; torrentGetNetUsage
+    torrentInit                    @370 ; torrentInit
+    torrentSetProxy                @371 ; torrentSetProxy
+    torrentStopDelete              @372 ; torrentStopDelete

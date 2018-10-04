@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="JShostapp">res/hostapp_qwebengine.js</file>
+        <file alias="JShostappPopup">res/hostapp_qwebengine_popup.js</file>
+    </qresource>
+</RCC>

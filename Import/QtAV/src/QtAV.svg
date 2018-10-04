@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="64"
+   height="64"
+   viewBox="0 0 63.999999 63.999999"
+   id="svg2"
+   version="1.1">
+  <g>
+    <circle
+       style="opacity:1;fill:#00bb00"
+       id="path4390"
+       cx="32.727058"
+       cy="31.1457"
+       r="25.950588" />
+    <circle
+       style="opacity:1;fill:#ffffff"
+       id="path4400"
+       cx="34.224396"
+       cy="29.4345"
+       r="20" />
+    <path
+       style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 25.0718,20 0,24 20.7846,-12 z"
+       transform="translate(4,-3)"
+       />
+  </g>
+</svg>

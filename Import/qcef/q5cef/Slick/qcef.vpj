@@ -1,0 +1,214 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+	Version="10.0"
+	VendorName="SlickEdit"
+	TemplateName="GNU C/C++"
+	WorkingDir=".."
+	VCSProject="Git:">
+	<Config
+		Name="Debug"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+		OutputFile="../../examples/release/qcefclient.exe"
+		CompilerConfigName="Latest Version"
+		Defines="">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ -c %xup %defd -g -fPIC -o "%bd%n%oe" %i %f'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ %xup -g -shared -fPIC -o "%o" %objs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw\examples">
+				<Exec CmdLine="qmake qcefclient.pro &amp;&amp; mingw32-make -j -l2"/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw\examples">
+				<Exec CmdLine="mingw32-make distclean"/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o" "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw\examples">
+				<Exec CmdLine='cmd /c "cd %b &amp; pwd &amp; qcefclient.exe "'/>
+			</Target>
+		</Menu>
+		<PreBuildCommands>
+			<Exec CmdLine="set PATH=C:\DEV\Qt\Tools\mingw482_32\bin;C:\DEV\Qt\5.3\mingw482_32\bin;%PATH%"/>
+		</PreBuildCommands>
+		<Includes/>
+		<Libs PreObjects="0"/>
+	</Config>
+	<Config
+		Name="Release"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+		OutputFile="../../examples/release/qcefclient.exe"
+		CompilerConfigName="Latest Version"
+		Defines="">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ -c %xup %defd -fPIC -o "%bd%n%oe" %i %f'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ %xup -shared -fPIC -o "%o" %objs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw\examples">
+				<Exec CmdLine="qmake qcefclient.pro &amp;&amp; mingw32-make -j -l2"/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw\examples">
+				<Exec CmdLine="mingw32-make distclean"/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o" "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw\examples">
+				<Exec CmdLine='cmd /c "cd %b &amp; pwd &amp; qcefclient.exe "'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+		</Menu>
+		<PreBuildCommands>
+			<Exec CmdLine="set PATH=C:\DEV\Qt\Tools\mingw482_32\bin;C:\DEV\Qt\5.3\mingw482_32\bin;%PATH%"/>
+		</PreBuildCommands>
+		<Includes/>
+		<Libs PreObjects="0"/>
+	</Config>
+	<Files>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go">
+			<F N="../cefclient/cefclient.cpp"/>
+			<F N="../cefclient/cefclient_qt.cpp"/>
+			<F N="../cefclient/client_app.cpp"/>
+			<F N="../cefclient/client_app_delegates.cpp"/>
+			<F N="../cefclient/client_binding.cpp"/>
+			<F N="../cefclient/client_handler.cpp"/>
+			<F N="../cefclient/client_handler_qt.cpp"/>
+			<F N="../cefclient/client_renderer.cpp"/>
+			<F N="../cefclient/client_transfer.cpp"/>
+			<F N="../cefclient/init_wrapper.cpp"/>
+			<F N="../examples/main.cpp"/>
+			<F N="../examples/main_process.cpp"/>
+			<F N="../examples/mainwindow.cpp"/>
+			<F N="../cefclient/message_event.cpp"/>
+			<F N="../examples/release/moc_mainwindow.cpp"/>
+			<F N="../cefclient/qcefwebview.cpp"/>
+		</Folder>
+		<Folder
+			Name="Header Files"
+			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if">
+			<F N="../cefclient/cefclient.h"/>
+			<F N="../cefclient/client_app.h"/>
+			<F N="../cefclient/client_app_js.h"/>
+			<F N="../cefclient/client_binding.h"/>
+			<F N="../cefclient/client_handler.h"/>
+			<F N="../cefclient/client_renderer.h"/>
+			<F N="../cefclient/client_transfer.h"/>
+			<F N="../cefclient/init_wrapper.h"/>
+			<F N="../examples/mainwindow.h"/>
+			<F N="../cefclient/message_event.h"/>
+			<F N="../cefclient/qcefwebview.h"/>
+			<F N="../examples/ui_mainwindow.h"/>
+			<F N="../cefclient/util.h"/>
+		</Folder>
+		<Folder
+			Name="Resource Files"
+			Filters="*.ico;*.cur;*.dlg"/>
+		<Folder
+			Name="Bitmaps"
+			Filters="*.bmp"/>
+		<Folder
+			Name="Other Files"
+			Filters="">
+			<F N="../examples/mainwindow.ui"/>
+			<F N="../examples/qcefclient.pro"/>
+			<F N="../examples/qcefclient_process.pro"/>
+		</Folder>
+	</Files>
+</Project>

@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="intro">res/startup_screen.png</file>
+
+        <file alias="pause-over">res/pause-18-22-over.png</file>
+        <file alias="pause">res/pause-18-22.png</file>
+        <file alias="play-over">res/play-18-22-over.png</file>
+        <file alias="play">res/play-18-22.png</file>
+        <file alias="stop-over">res/stop-18-22-over.png</file>
+        <file alias="stop">res/stop-18-22.png</file>
+        <file alias="sound-over">res/sound-18-22-over.png</file>
+        <file alias="sound">res/sound-18-22.png</file>
+        <file alias="mute-over">res/mute-18-22-over.png</file>
+        <file alias="mute">res/mute-18-22.png</file>
+        <file alias="balloon-over">res/balloon-over.png</file>
+        <file alias="balloon">res/balloon.png</file>
+        <file alias="settings-over">res/settings-over.png</file>
+        <file alias="settings">res/settings.png</file>
+        <file alias="full-scr-over">res/fullscr-over.png</file>
+        <file alias="full-scr">res/fullscr.png</file>
+        <file alias="exit-full-scr-over">res/fullscr-exit-over.png</file>
+        <file alias="exit-full-scr">res/fullscr-exit.png</file>
+        <file alias="chromecast_on">res/chromecast_on.png</file>
+        <file alias="chromecast_on_over">res/chromecast_on_over.png</file>
+        <file alias="chromecast_off">res/chromecast_off.png</file>
+        <file alias="chromecast_off_over">res/chromecast_off_over.png</file>
+        <file alias="chromecast_search">res/chromecast_search.gif</file>
+        <file alias="close-styled">res/close-styled.png</file>
+        <file alias="buffering">res/buffering.gif</file>
+
+        <file alias="chromecast_icon">res/chromecast_icon.png</file>
+        <file alias="dlna_icon">res/dlna_icon.png</file>
+        <file alias="airplay_icon">res/airplay_icon.png</file>
+        <file alias="popcorntime_icon">res/popcorntime_icon.png</file>
+
+        <file alias="LangEncodingMap">res/LangEncodingMap.txt</file>
+        <file alias="Dictionary">res/dic.txt</file>
+        <file alias="controls.ttf">res/controls.ttf</file>
+    </qresource>
+</RCC>

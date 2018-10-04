@@ -1,0 +1,550 @@
+[
+  {
+    "id": "aa",
+    "encodings": ""
+  },
+  {
+    "id": "ab",
+    "encodings": ""
+  },
+  {
+    "id": "af",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "am",
+    "encodings": ""
+  },
+  {
+    "id": "ar",
+    "encodings": "CP1256,ISO-8859-6"
+  },
+  {
+    "id": "as",
+    "encodings": ""
+  },
+  {
+    "id": "ay",
+    "encodings": ""
+  },
+  {
+    "id": "az",
+    "encodings": "CP1254,CP857,CP1251,CP866"
+  },
+  {
+    "id": "ba",
+    "encodings": "CP1251,CP866"
+  },
+  {
+    "id": "be",
+    "encodings": "CP1251,CP866,ISO-8859-5"
+  },
+  {
+    "id": "bg",
+    "encodings": "CP1251,CP866,ISO-8859-5"
+  },
+  {
+    "id": "bh",
+    "encodings": ""
+  },
+  {
+    "id": "bi",
+    "encodings": ""
+  },
+  {
+    "id": "bn",
+    "encodings": ""
+  },
+  {
+    "id": "bo",
+    "encodings": ""
+  },
+  {
+    "id": "br",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "ca",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "co",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "cs",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "cy",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "da",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "de",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "dz",
+    "encodings": ""
+  },
+  {
+    "id": "el",
+    "encodings": "CP1253,CP737,ISO-8859-7"
+  },
+  {
+    "id": "en",
+    "encodings": "CP1252,CP437,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "eo",
+    "encodings": ""
+  },
+  {
+    "id": "es",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "et",
+    "encodings": "CP1257,CP775"
+  },
+  {
+    "id": "eu",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "fa",
+    "encodings": "CP1256"
+  },
+  {
+    "id": "fi",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "fj",
+    "encodings": ""
+  },
+  {
+    "id": "fo",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "fr",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "fy",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "ga",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "gd",
+    "encodings": ""
+  },
+  {
+    "id": "gl",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "gn",
+    "encodings": ""
+  },
+  {
+    "id": "gu",
+    "encodings": ""
+  },
+  {
+    "id": "ha",
+    "encodings": "CP1252,CP437"
+  },
+  {
+    "id": "he",
+    "encodings": "CP1255,CP862,ISO-8859-8,CP856"
+  },
+  {
+    "id": "hi",
+    "encodings": ""
+  },
+  {
+    "id": "hr",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "hu",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "hy",
+    "encodings": "ARMSCII-8"
+  },
+  {
+    "id": "ia",
+    "encodings": ""
+  },
+  {
+    "id": "ie",
+    "encodings": ""
+  },
+  {
+    "id": "ik",
+    "encodings": ""
+  },
+  {
+    "id": "in",
+    "encodings": ""
+  },
+  {
+    "id": "is",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "it",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "ja",
+    "encodings": "CP932,CP943,EUC-JP,SHIFT_JIS,CP932,ISO-2022-JP,ISO-2022-JP-2,ISO-2022-JP-1"
+  },
+  {
+    "id": "ji",
+    "encodings": ""
+  },
+  {
+    "id": "jw",
+    "encodings": "CP932,CP943,EUC-JP,SHIFT_JIS,CP932,ISO-2022-JP,ISO-2022-JP-2,ISO-2022-JP-1"
+  },
+  {
+    "id": "ka",
+    "encodings": "GEORGIAN-ACADEMY,GEORGIAN-PS"
+  },
+  {
+    "id": "kk",
+    "encodings": "CP1251,CP866,PT154,RK1048"
+  },
+  {
+    "id": "kl",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "km",
+    "encodings": ""
+  },
+  {
+    "id": "kn",
+    "encodings": ""
+  },
+  {
+    "id": "ko",
+    "encodings": "EUC-KR,CP949,ISO-2022-KR,JOHAB"
+  },
+  {
+    "id": "ks",
+    "encodings": ""
+  },
+  {
+    "id": "ku",
+    "encodings": ""
+  },
+  {
+    "id": "ky",
+    "encodings": "CP1251,CP866"
+  },
+  {
+    "id": "la",
+    "encodings": ""
+  },
+  {
+    "id": "ln",
+    "encodings": ""
+  },
+  {
+    "id": "lo",
+    "encodings": ""
+  },
+  {
+    "id": "lt",
+    "encodings": "CP1257,CP775"
+  },
+  {
+    "id": "lv",
+    "encodings": "CP1257,CP775"
+  },
+  {
+    "id": "mg",
+    "encodings": ""
+  },
+  {
+    "id": "mi",
+    "encodings": ""
+  },
+  {
+    "id": "mk",
+    "encodings": "CP1251,CP866,ISO-8859-5"
+  },
+  {
+    "id": "ml",
+    "encodings": ""
+  },
+  {
+    "id": "mn",
+    "encodings": "CP1251,CP866,"
+  },
+  {
+    "id": "mo",
+    "encodings": ""
+  },
+  {
+    "id": "mr",
+    "encodings": ""
+  },
+  {
+    "id": "ms",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "mt",
+    "encodings": ""
+  },
+  {
+    "id": "my",
+    "encodings": ""
+  },
+  {
+    "id": "na",
+    "encodings": ""
+  },
+  {
+    "id": "ne",
+    "encodings": ""
+  },
+  {
+    "id": "nl",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "no",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "oc",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "om",
+    "encodings": ""
+  },
+  {
+    "id": "or",
+    "encodings": ""
+  },
+  {
+    "id": "pa",
+    "encodings": ""
+  },
+  {
+    "id": "pl",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "ps",
+    "encodings": ""
+  },
+  {
+    "id": "pt",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "qu",
+    "encodings": ""
+  },
+  {
+    "id": "rm",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "rn",
+    "encodings": ""
+  },
+  {
+    "id": "ro",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "ru",
+    "encodings": "CP1251,CP866,ISO-8859-5,KOI8-R,KOI8-RU"
+  },
+  {
+    "id": "rw",
+    "encodings": "CP1252,CP437"
+  },
+  {
+    "id": "sa",
+    "encodings": ""
+  },
+  {
+    "id": "sd",
+    "encodings": ""
+  },
+  {
+    "id": "sg",
+    "encodings": ""
+  },
+  {
+    "id": "sh",
+    "encodings": "ISO-8859-2"
+  },
+  {
+    "id": "si",
+    "encodings": ""
+  },
+  {
+    "id": "sk",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "sl",
+    "encodings": "CP1250,CP852,ISO-8859-2"
+  },
+  {
+    "id": "sm",
+    "encodings": ""
+  },
+  {
+    "id": "sn",
+    "encodings": ""
+  },
+  {
+    "id": "so",
+    "encodings": ""
+  },
+  {
+    "id": "sq",
+    "encodings": "CP1250,CP852,ISO-8859-1,CP850,ISO-8859-15"
+  },
+  {
+    "id": "sr",
+    "encodings": "CP1251,CP855,CP1250,CP852"
+  },
+  {
+    "id": "ss",
+    "encodings": ""
+  },
+  {
+    "id": "st",
+    "encodings": ""
+  },
+  {
+    "id": "su",
+    "encodings": ""
+  },
+  {
+    "id": "sv",
+    "encodings": "CP1252,CP850,ISO-8859-1,ISO-8859-15"
+  },
+  {
+    "id": "sw",
+    "encodings": "CP1252,CP437"
+  },
+  {
+    "id": "ta",
+    "encodings": ""
+  },
+  {
+    "id": "te",
+    "encodings": ""
+  },
+  {
+    "id": "tg",
+    "encodings": "CP1251,CP866,KOI8-T"
+  },
+  {
+    "id": "th",
+    "encodings": "vestko"
+  },
+  {
+    "id": "ti",
+    "encodings": ""
+  },
+  {
+    "id": "tk",
+    "encodings": "CP1250,CP852"
+  },
+  {
+    "id": "tl",
+    "encodings": ""
+  },
+  {
+    "id": "tn",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "to",
+    "encodings": ""
+  },
+  {
+    "id": "tr",
+    "encodings": "CP1254,CP857,ISO-8859-9"
+  },
+  {
+    "id": "ts",
+    "encodings": ""
+  },
+  {
+    "id": "tt",
+    "encodings": "CP1251,CP866"
+  },
+  {
+    "id": "tw",
+    "encodings": ""
+  },
+  {
+    "id": "uk",
+    "encodings": "CP1251,CP866,ISO-8859-5,CP1124,KOI8-U"
+  },
+  {
+    "id": "ur",
+    "encodings": "CP1256,CP1254,CP857,CP1251,CP866"
+  },
+  {
+    "id": "uz",
+    "encodings": ""
+  },
+  {
+    "id": "vi",
+    "encodings": "VISCII,TCVN,CP1258"
+  },
+  {
+    "id": "vo",
+    "encodings": ""
+  },
+  {
+    "id": "wo",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "xh",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "yo",
+    "encodings": "CP1252,CP437"
+  },
+  {
+    "id": "zh",
+    "encodings": "EUC-CN,HZ,GBK,CP936,GB18030,EUC-TW,BIG5,CP950,BIG5-HKSCS,BIG5-HKSCS:2004,BIG5-HKSCS:2001,BIG5-HKSCS:1999,ISO-2022-CN,ISO-2022-CN-EXT"
+  },
+  {
+    "id": "zu",
+    "encodings": "CP1252,CP850"
+  },
+  {
+    "id": "all",
+    "encodings": "ASCII,UCS-2,UCS-2BE,UCS-2LE,UCS-4,UCS-4BE,UCS-4LE,UTF-16,UTF-16BE,UTF-16LE,UTF-32,UTF-32BE,UTF-32LE,UTF-7"
+  }
+]

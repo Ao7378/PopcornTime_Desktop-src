@@ -1,0 +1,25 @@
+{
+  "name": "chromecast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "air-command-processor.js",
+  "dependencies": {
+    "airplay-js": "^0.2.5",
+    "castv2-client": "^0.0.1",
+    "debug": "^2.2.0",
+    "lodash": "^2.4.1",
+    "mdns-js": "^0.2.7",
+    "node-captions": "^0.2.1",
+    "node-ssdp": "^2.7.0",
+    "string": "^1.9.1",
+    "upnp-mediarenderer-client": "^1.2.1",
+    "xmlbuilder": "^2.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

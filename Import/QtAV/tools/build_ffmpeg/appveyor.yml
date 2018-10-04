@@ -1,0 +1,109 @@
+# can not have space before '&&', ')' when setting env var in multiple line commands
+branches:
+  only:
+    - master
+    - prelease
+    - ci
+    - appveyor
+
+environment:
+  matrix:
+  - _ARCH: x86
+    _CC: VS2013
+    _PLATFORM: desktop
+  - _ARCH: x64
+    _CC: VS2015
+    _PLATFORM: desktop
+  - _ARCH: arm
+    _CC: VS2013
+    _PLATFORM: phone
+  - _ARCH: x86
+    _CC: VS2013
+    _PLATFORM: store
+  - _ARCH: arm
+    _CC: VS2015
+    _PLATFORM: store
+  - _ARCH: x64
+    _CC: VS2015
+    _PLATFORM: store
+  - _ARCH: 32
+    _CC: MINGW
+    _PLATFORM: desktop
+    _CACHE: msys64
+  - _ARCH: 64
+    _CC: MINGW
+    _PLATFORM: desktop
+    _CACHE: msys64
+
+matrix:
+  fast_finish: false
+
+cache:
+  - C:\%_CACHE%\var\cache\pacman\pkg -> appveyor.yml
+  - ffmpeg-%FF_VERSION%
+
+init:
+  - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
+  - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
+  - set MSYS2_PATH_TYPE=inherit
+  - set MSYS2_DIR=C:\msys64
+
+install:
+# can not starts with %
+  - if /i %_ARCH%==arm git submodule update --init
+  - if /i %_ARCH%==32 set _ARCH2=i686
+  - if /i %_ARCH%==64 set _ARCH2=x86_64
+  - if /i %_CC%==MinGW (
+      C:\msys64\usr\bin\pacman -Rsc --noconfirm bsdcpio bsdtar gcc gdb gperf mpc python2 scons swig subversion mingw-w64-x86_64-ncurses mingw-w64-i686-crt-git mingw-w64-i686-gdb mingw-w64-i686-gcc-ada mingw-w64-i686-gcc-fortran mingw-w64-i686-gcc-objc  mingw-w64-x86_64-crt-git mingw-w64-x86_64-gcc-ada mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gcc-objc &&
+      C:\msys64\usr\bin\pacman -Syyuu --noconfirm &&
+      C:\msys64\usr\bin\pacman -Suu --noconfirm   &&
+      C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-%_ARCH2%-gcc &&
+      C:\msys64\usr\bin\pacman -Sc --noconfirm
+    )
+  - C:\msys64\usr\bin\pacman -S --noconfirm --needed diffutils pkg-config yasm
+  - if not exist ffmpeg-%FF_VERSION% (
+      appveyor DownloadFile "http://ffmpeg.org/releases/ffmpeg-%FF_VERSION%.tar.xz" &&
+      7z x -y ffmpeg-%FF_VERSION%.tar.xz &&
+      7z x -y ffmpeg-%FF_VERSION%.tar > NUL
+    )
+  - if /i %_PLATFORM%==desktop (
+      appveyor DownloadFile "https://sourceforge.net/projects/avbuild/files/dep/libmfx.7z/download" -FileName libmfx.7z &&
+      7z x -y libmfx.7z -otools &&
+      set PKG_CONFIG_PATH_EXT=%CD%\tools\%_CC%%_ARCH%\lib\pkgconfig)
+
+before_build:
+  - set HOME=%CD%
+  - set MSYSTEM=%_CC%%_ARCH% # ffmpeg configure refuses to build for mingw in pure msys. so we lie. MUST use upper case. ommited by msvc
+  - copy /y config-lite.sh config.sh
+  - set FFSRC=%CD%\ffmpeg-%FF_VERSION%
+
+build_script:
+# V=1 to check libmfx error, but the error disappears if V=1. WTF
+  - if /i not %_CC%==MinGW if /i not %_PLATFORM%==store set V=1
+  - if /i %_CC%==MinGW (
+      set VC_BUILD=false&&
+      C:\msys64\usr\bin\bash.exe --login avbuild.sh
+    ) else (
+      set BUILD_NOW=true&&
+      tools\vcbuild.bat %_CC% %_PLATFORM% %_ARCH%
+    )
+
+after_build:
+  - set SDK_NAME=ffmpeg-%FF_VERSION%-%_PLATFORM%-%_CC%%_ARCH%-lite
+  - move sdk* %SDK_NAME%
+  - 7z a %SDK_NAME%.7z %SDK_NAME%
+
+test: off
+
+artifacts:
+  - path: '%SDK_NAME%.7z'  # relative to repo root
+
+deploy:
+  provider: FTP
+  protocol: sftp
+  host: frs.sourceforge.net
+  username: novesky
+  password:
+    secure: 2mQg4oxdX8S7rMJz2TCGGg==
+  folder: /home/frs/project/avbuild/windows-%_PLATFORM% # why always relative path even if starts with / ? I have to make a link home/frs/project/avbuild/xxx => /home/frs/project/avbuild/xxx
+  active_mode: false

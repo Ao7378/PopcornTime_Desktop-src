@@ -1,0 +1,50 @@
+>>>>
+Torrent library:
+>>>>
+
+Windows:
+To build:
+1. Build boost.
+2. Set enviroment variables:
+BOOST_ROOT=Path-to-Boost\boost_1_55_0
+CXXFLAGS=-IPath-to-Boost\boost_1_55_0
+LDFLAGS=/LIBPATH:Path-to-Boost\boost_1_55_0\stage\lib
+3. use boost libs:
+ -for debug   libboost_system-vc100-mt-gd-1_55.lib 
+ -for release libboost_system-vc100-mt-1_55.lib 
+
+Mac OS X Maverics:
+1. Install XCode.
+2. From commandline:
+xcode-select --install
+sudo port install boost
+sudo port install boost-build
+sudo port install boost-jam
+sudo port install autoconf
+sudo port install automake
+sudo port install libtool
+./autotool.sh
+./configure
+
+Mac OS X Mountain Lion:
+1. Install XCode 4.6.3 from AppStore.
+2. Install command line tools from Xcode menu > Preferences > Downloads.
+3. Extract boost (into /opt/local). Build
+sudo ./bjam --with-thread --with-filesystem --with-date_time --with-iostreams --build-type=MINIMAL --link=static --runtime-link=static -j8 -sgdpn install|tee log
+
+
+>>>>
+GUI
+>>>>
+
+zlib:
+make -f win32/Makefile.gcc
+
+Mac OS X:
+- Install VLC player.
+- Install CMake.
+- Install QT5.
+- make && install vlc-qt.
+
+Making GUI:
+qmake && make -j -l2 release
